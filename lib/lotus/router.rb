@@ -85,6 +85,7 @@ module Lotus
   #
   #   # All the requests starting with "/api" will be forwarded to Api::App
   class Router
+    include Enumerable
     # Initialize the router.
     #
     # @param options [Hash] the options to initialize the router
@@ -873,6 +874,12 @@ module Lotus
     #   router.url(:framework, name: 'router')      # => "https://lotusrb.org/router"
     def url(route, *args)
       @router.url(route, *args)
+    end
+
+    def each
+      @router.routes.each do |route|
+        yield route if block_given?
+      end
     end
   end
 end
