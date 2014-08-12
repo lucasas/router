@@ -121,7 +121,7 @@ module Lotus
     #   end
     def initialize(options = {}, &blk)
       @router = Routing::HttpRouter.new(options)
-      define(&blk)
+      define(options.delete(:mount_at), &blk)
     end
 
     # To support defining routes in the `define` wrapper.
@@ -144,8 +144,10 @@ module Lotus
     #   define do
     #     get # ...
     #   end
-    def define(&blk)
-      instance_eval(&blk) if block_given?
+    def define(mount_at = '', &blk)
+      namespace(mount_at) do
+        instance_eval(&blk) if block_given?
+      end
     end
 
     # Defines a route that accepts a GET request for the given path.
