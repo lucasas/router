@@ -85,7 +85,6 @@ module Lotus
   #
   #   # All the requests starting with "/api" will be forwarded to Api::App
   class Router
-    include Enumerable
     # Initialize the router.
     #
     # @param options [Hash] the options to initialize the router
